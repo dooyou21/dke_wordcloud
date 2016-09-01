@@ -49,6 +49,18 @@ body{
 	opacity: .8; 
 }
 
+.span_wc{
+	background-color: #ffffff;
+	color: #5522ff;
+	padding: 5px;
+	margin: 5px;
+	text-shadow: 0 0 1px rgba(0, 0, 0, 0);
+	cursor: pointer;
+}
+.span_wc:hover{
+	text-shadow: 0 0 3px rgba(179, 179, 255, 1);
+	cursor: hand;
+}
 .span_word{
 	background-color: #ffffff;
 	color: #3333ff;

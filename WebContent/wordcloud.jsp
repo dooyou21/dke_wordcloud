@@ -55,15 +55,10 @@ function ui_init() {
 <%
 	for(int i=0;i<length;++i) {
 %>	
-		$('#header').append("<span class='span_word' id='<%=keywords[i] %>'><%=keywords[i] %> </span>");
+		$('#header').append("<span class='span_wc' id='<%=keywords[i] %>'><%=keywords[i] %> </span>");
 <%
 	}
 %>
-	$('.span_word').on('click', function() {//word remove
-		if(confirm($(this).text()+'을(를) 삭제할까요?')) {
-			$(this).remove();
-		}
-	});
 }
 </script>
 <link rel="stylesheet" type="text/css" href="./style/layout.css" />
@@ -82,7 +77,7 @@ function ui_init() {
 		 	<div id="word-cloud"></div>
 		</div>
 	 	<div id="footer">
-	 		<p>Copyrightⓒ2016 by SuJeongLee</p>
+	 		<p>Copyrightⓒ2016 by Data and Knowledge Engineering Lab</p>
 	 	</div>
 	</div>
 </body>
