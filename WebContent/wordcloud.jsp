@@ -59,6 +59,11 @@ function ui_init() {
 <%
 	}
 %>
+	$('.span_word').on('click', function() {//word remove
+		if(confirm($(this).text()+'을(를) 삭제할까요?')) {
+			$(this).remove();
+		}
+	});
 }
 </script>
 <link rel="stylesheet" type="text/css" href="./style/layout.css" />
