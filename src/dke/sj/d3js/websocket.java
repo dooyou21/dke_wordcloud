@@ -22,6 +22,9 @@ private static Set<Session> clients = Collections.synchronizedSet(new HashSet<Se
 	public void onMessage(String message, Session session) throws IOException {
 		String words[] = message.split(",");
 		for(String s : words) System.out.println(s);
+		
+		DBConnection dbcon = new DBConnection();
+//		dbcon.insertKeywords(message, session.toString());
 
 		synchronized(clients) {
 			for(Session client: clients) {
