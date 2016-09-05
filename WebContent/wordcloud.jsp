@@ -14,7 +14,6 @@
 <script type="text/javascript" src="./js/d3.min.js"></script>
 <script type="text/javascript" src="./js/d3.layout.cloud.js"></script>
 <script type="text/javascript" src="./js/wordcloud.js"></script>
-<script type="text/javascript" src="./js/websocket.js"></script>
 <script>
 $('document').ready(function () {
 	websocket_init();
