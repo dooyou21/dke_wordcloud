@@ -422,7 +422,7 @@ var spirals = {
         return (callback = callbackByName[type.name]) && callback.value;
       }
 
-      // If a type was specified¡¦
+      // If a type was specifiedï¿½ï¿½
       if (type.type) {
         var callbacks = callbacksByType[type.type],
             callback0 = callbackByName[type.name],
@@ -444,7 +444,8 @@ var spirals = {
         }
       }
 
-      // Otherwise, if a null callback was specified, remove all callbacks with the given name.
+      // Otherwise, if a null callback was specified, remove all callbacks
+		// with the given name.
       else if (callback == null) {
         for (var otherType in callbacksByType) {
           if (callback = callbackByName[otherType + type.name]) {
@@ -475,7 +476,8 @@ var spirals = {
 
     function applier(type) {
       return function() {
-        var callbacks = callbacksByType[type], // Defensive reference; copy-on-remove.
+        var callbacks = callbacksByType[type], // Defensive reference;
+												// copy-on-remove.
             callback,
             callbackValue,
             i = -1,

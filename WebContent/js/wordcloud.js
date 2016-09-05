@@ -51,7 +51,7 @@ $(document).ready(function() {
 	
 	var scale = d3.scale.linear()
 		.domain(d3.extent(data, function(d) { return d.weight; }))
-		.range([20,80]);
+		.range([15,60]);
 	
 	var layout = d3.layout.cloud()
 			.timeInterval(Infinity)
@@ -90,18 +90,18 @@ $(document).ready(function() {
 					if (data[i].word == _word) {idx = i; break;}
 				}
 
-				if (idx === -1) {// new word
+				if (idx === -1) {// 새로운 단어일 때 데이터에 추가
 					data.push({word : _word, weight : _weight});
-				} else {// exist hashtag
+				} else {// 이미 존재하는 단어일 때 weight변경
 					data[idx].weight = data[idx].weight + _weight;
 				}
-			} else {// add data at first(empty data array)
+			} else {// 데이터 배열이 비어있을 때
 				data.push({word : _word, weight : _weight});
 			}
 		}
 		scale = d3.scale.linear()
 		.domain(d3.extent(data, function(d) { return d.weight; }))
-		.range([20,80]);
+		.range([15,60]);
 		
 		update();
 	});

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
+    request.setCharacterEncoding("UTF-8");
 	String keyword = request.getParameter("search");
 	String[] keywords = keyword.split(",");
 	int length = keywords.length;
@@ -34,7 +34,7 @@ function websocket_init() {
 			//open
 			console.log("opened");
 			
-			socket.send("<%=keyword%>");
+			socket.send("CLIENT:"+"<%=keyword%>");
 		};
 		
 		socket.onmessage = function(event) {
