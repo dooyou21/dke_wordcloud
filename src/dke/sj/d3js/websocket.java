@@ -25,7 +25,7 @@ private static Set<Session> clients = Collections.synchronizedSet(new HashSet<Se
 		String m[] = message.split(":");//triednt 인지 client인지 판별
 		if(m[0].equals("CLIENT")){ //client: client에서 온 메시지이면 키워드요청이므로 데이터 insert
 			System.out.println("client's message: "+m[1]);
-//			String words[] = m[1].split(","); //안쓰는듯?
+			
 			dbcon = new DBConnection();//connection open
 			dbcon.insertKeywordsAndSessions(m[1], session.toString()); //connection close
 			
@@ -53,14 +53,14 @@ private static Set<Session> clients = Collections.synchronizedSet(new HashSet<Se
 	
 	@OnOpen
 	public void onOpen(Session session) {
-		System.out.println(session);
+		System.out.println("open: "+session);
 		clients.add(session);
 		//insert session은 message에서! trident와 client를 나눠야하기때문에
 	}
 	
 	@OnClose
 	public void onClose(Session session) {
-		clients.remove(session);
+		clients.remove("close: "+session);
 		dbcon = new DBConnection();
 		dbcon.deleteSession(session.toString());
 	}
