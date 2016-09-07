@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-	var WIDTH = $('#word-cloud').width(), HEIGHT = $('#word-cloud').height();
+	var WIDTH = 800, HEIGHT = 600;
 	
 	var fill = d3.scale.category20b();
  	
@@ -108,7 +108,6 @@ $(document).ready(function() {
 	
 	$('#removeBtn').on('click', function() {
 		data.pop();
-		console.log(data);
 		update();
 	});
 	
@@ -144,7 +143,7 @@ $(document).ready(function() {
 	    
 	    layout
 	    	.stop()
-	    	.words(data.map(function(d) { console.log(scale(d.weight)); return { text:d.word, size:scale(d.weight) }; }))
+	    	.words(data.map(function(d) { return { text:d.word, size:scale(d.weight) }; }))
 	    	.start();
 	}
 	

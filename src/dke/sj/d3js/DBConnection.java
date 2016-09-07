@@ -174,7 +174,7 @@ public class DBConnection {
 			rs = pstmt.executeQuery();
 			
 			int i=0;//usage arr를 저장하기 위한 반복자
-			while(rs.next()){
+			while(rs.next() && (i<length)){
 //				System.out.println(rs.getString("id")+","+k_id_arr.get(i));
 				if(rs.getString("id").equals(k_id_arr.get(i))) {
 					k_usage_arr.add(Integer.parseInt(rs.getString("usage")) - 1);
@@ -215,20 +215,74 @@ public class DBConnection {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 	}	
 	
+	/*
+	 * 
+	 * Trident로부터 들어온 keyword에 대한 Tag를 보낼 session찾기
+	 * 
+	 */
 	public String[] selectSession(String kw) {
 		
+		String sql;
 		String[] sessions = null;
+		ArrayList<String> sessions_arr = new ArrayList<>();
+		ArrayList<String> k_id_arr = new ArrayList<>();
+		ArrayList<String> s_id_arr = new ArrayList<>();
 		
 		//k table에서 keyword=kw 인 것의 id 가져옴
-		//sk table에서 k_id가 위에서 찾은 id인 s_id가져옴
-		//s table애서 id=s_id인 것의 session 가져옴
+		try {
+			sql = "SELECT id FROM keyword_tb WHERE keyword = '" + kw + "'";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			String id;
+			while(rs.next()) {
+				k_id_arr.add(rs.getString("id"));
+				
+			}
+			rs.close();
+			pstmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		//session.push(session);
+		int length;
+		
+		//sk table에서 k_id가 위에서 찾은 id인 s_id가져옴
+		try {
+			length = k_id_arr.size();
+			for(int i=0;i<length;++i) {
+				sql = "SELECT s_id FROM session_keyword_tb WHERE k_id = " + k_id_arr.get(i);
+				pstmt = conn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				while(rs.next()){
+					s_id_arr.add(rs.getString("s_id"));
+				}
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+
+		//s table애서 id=s_id인 것의 session 가져옴
+		try {
+			length = s_id_arr.size();
+			for(int i=0;i<length;++i) {
+				sql = "SELECT session FROM session_tb WHERE id = " + s_id_arr.get(i);
+				pstmt = conn.prepareStatement(sql);
+				rs = pstmt.executeQuery();
+				while(rs.next()){
+					sessions_arr.add(rs.getString("session"));
+				}
+			}
+		} catch (SQLException e){
+			e.printStackTrace();
+		}
+		
+		sessions = new String[sessions_arr.size()];
+		sessions = sessions_arr.toArray(sessions);
 		
 		return sessions;
-		
 	}
 }
