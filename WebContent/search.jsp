@@ -6,7 +6,9 @@
 <title>Search Keyword from twitter!</title>
 <script type="text/javascript" src="./js/jquery-3.1.0.js"></script>
 <link rel="stylesheet" type="text/css" href="./style/layout.css" />
-<link rel="stylesheet" type="text/css" href="./style/style.css" />
+<link rel="stylesheet" type="text/css" href="./style/blog.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
 $('document').ready(function() {
 	$('#word').hide();
@@ -78,23 +80,43 @@ function search_word() {
 </script>
 </head>
 <body>
-	<div class="wrapper">
-		<h2>Search Keyword from Twitter</h2>
+	<div class="blog-masthead">
+		<div class="container">
+			<nav class="blog-nav">
+				<a class="blog-nav-item active" href="#">Home</a>
+			</nav>
+		</div>
+	</div>
+
+	<div class="container">
+		<h2>Tag Cloud</h2>
 		<div id="words">
 			<p>keywords</p>
 			<span class='span_word' id="word">example word</span>
 		</div>
 		<div id="contents">
+		<div class="col-sm-12 blog-main">
 			<form action="wordcloud.jsp" method="post" id="form_words" onsubmit="return search_word();">
-				<p>Press 'Tab' to add words and press 'search' button to search hashtag!</p>
-				<input type="text" id="search-word" size="50" />
-				<input type="submit" value="search" />
+				<p class="blog-post-meta">Press 'Tab' to add words and press 'search' button to search hashtag!</p>
+				<div class="row">
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="search-word" />
+					</div>
+					<div class="col-sm-2">
+						<input type="submit" class="btn btn-default btn-block" value="search" />
+					</div>
+				</div>
 				<input type="hidden" name='search' id="search_words" />
 			</form>
-		</div>
-		<div id="footer">
-			<p>Copyrightⓒ2016 by Data and Knowledge Engineering Lab</p>
+			
+			
+		</div>	
 		</div>
 	</div>
+	<footer class="blog-footer">
+		<div class="container">
+			 <p class="text-muted">Copyrightⓒ2016 by Data and Knowledge Engineering Lab</p>
+		</div>
+	</footer>
 </body>
 </html>

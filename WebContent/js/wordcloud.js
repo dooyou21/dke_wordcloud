@@ -1,4 +1,5 @@
-$(document).ready(function() {
+var dataChanged;
+function drawWordcloud() {
 
 	var WIDTH = 800, HEIGHT = 600;
 	
@@ -68,11 +69,11 @@ $(document).ready(function() {
 	
 	update();
 	
-	$('#addBtn').on('click', function() {
+	dataChanged = function(input) {
 		
 		//웹소켓에서 받아온 데이터 계산->data update->다시그려주기
 		//input가정
-		var input = '{"Hello":3, "AboutTime":2, "Sing Street":5, "Mission Impossible":9, "Notebook":1}';
+//		var input = '{"Hello":3, "AboutTime":2, "Sing Street":5, "Mission Impossible":9, "Notebook":1}';
 		
 		var tmp = JSON.parse(input);
 
@@ -104,14 +105,12 @@ $(document).ready(function() {
 		.range([15,60]);
 		
 		update();
-	});
+	};
 	
-	$('#removeBtn').on('click', function() {
-		data.pop();
-		update();
-	});
-	
-	
+//	$('#removeBtn').on('click', function() {
+//		data.pop();
+//		update();
+//	});
 	
 	function draw(newdata, bounds) {
 
@@ -130,21 +129,16 @@ $(document).ready(function() {
 			.attr("text-anchor", "middle")
 			.style("font-family", "Impact")
 			.style("font-size", function(d) { return d.size + "px"; })  //size need scaling
-			.attr("transform", function(d) { return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")"; })
-			.style("opacity", 1e-6)
-			.transition().duration(1000)
-			.style("opacity", 1); 
+			.attr("transform", function(d) { return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")"; });
 		
 		text.exit().remove(); // remove text that doesn't exist in data
 	}
 
 	function update() {
 	    layout.spiral('archimedean');
-	    
 	    layout
 	    	.stop()
 	    	.words(data.map(function(d) { return { text:d.word, size:scale(d.weight) }; }))
 	    	.start();
 	}
-	
-});
+};

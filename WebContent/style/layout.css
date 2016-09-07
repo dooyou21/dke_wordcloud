@@ -1,7 +1,7 @@
 @CHARSET "EUC-KR";
-body{
-	padding: 0px;
-	background-color: #99c2ff; 
+body {
+    /*font-family: Georgia, "Times New Roman", Times, serif;*/
+    color: #555;
 }
 
 .wrapper{
@@ -12,14 +12,7 @@ body{
 	padding: 20px;
 }
 
-.wrapper #header{
-	height: 50px;
-	padding: 10px;
-	background-color: #E0E0E0;
-    opacity: .8;
-}
-
-.wrapper #contents{
+.container #contents{
 	padding:10px;
 	min-height: 300px;
 	background-color: #ffffff;
@@ -33,16 +26,8 @@ body{
 	        justify-content: center;
 }
 
-.wrapper #footer{
-	height: 80px;
-	float: bottom;
-	padding: 10px;
-	background-color: #909090;
-    opacity: .8;
-}
-
-
-.wrapper #words{
+.container #words{
+	margin-top: 30px;
 	min-height: 30px;
 	padding: 20px;
 	background-color: #E0E0E0;
@@ -71,7 +56,7 @@ body{
 }
 .span_word:hover{
 	color: transparent;
-    text-shadow: 0 0 3px rgba(179, 179, 255, 1);
+    text-shadow: 0 0 3px rgba(120, 120, 200, 1);
     cursor: hand;
 }
 #word-cloud{

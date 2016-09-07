@@ -48,19 +48,14 @@ public class DBConnection {
 		int result;
 		keyword = message.split(",");
 		int length = keyword.length;
-//		System.out.println(length+"");
 		
 		//insert session
 		String sql = "INSERT INTO session_tb (session) VALUES ('" + session + "')";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			result = pstmt.executeUpdate();
-			if(result > 0) {
-//				System.out.println("session insert successed!");
-			}
 			pstmt.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -71,12 +66,10 @@ public class DBConnection {
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				s_id = rs.getString("id");
-//				System.out.println("session id: "+s_id);
 			}
 			rs.close();
 			pstmt.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -92,7 +85,6 @@ public class DBConnection {
 				rs = pstmt.executeQuery();
 				
 				if (!rs.next()) {  //empty rs == new keyword
-//				    System.out.println("new keyword");
 					//insert keyword
 					sql2 = "INSERT INTO keyword_tb (keyword) VALUES ('" + keyword[i] + "')";
 					pstmt = conn.prepareStatement(sql2);
@@ -104,13 +96,10 @@ public class DBConnection {
 					while(rs.next()){
 						k_id = rs.getString("id");
 					}
-//					System.out.println("get k_id"+k_id);
 				} else { // exist keyword
 					do { // ? do while 없어도되나...?
 						k_id = rs.getString("id");
 						k_usage = Integer.parseInt(rs.getString("usage"));
-//						System.out.println("keyword already exist. keyword_id: "+k_id);
-//						System.out.println("keyword already exist. usage: "+k_usage);
 						++k_usage;
 						sql2 = "UPDATE keyword_tb SET `usage` = " + k_usage + " WHERE id = " + k_id;
 						pstmt = conn.prepareStatement(sql2);
@@ -167,28 +156,25 @@ public class DBConnection {
 			rs.close();
 			pstmt.close();
 			
-			int length = k_id_arr.size();
 			
 			sql1 = "SELECT `usage`, id FROM keyword_tb";
 			pstmt = conn.prepareStatement(sql1);
 			rs = pstmt.executeQuery();
 			
 			int i=0;//usage arr를 저장하기 위한 반복자
+			int length = k_id_arr.size();
 			while(rs.next() && (i<length)){
-//				System.out.println(rs.getString("id")+","+k_id_arr.get(i));
 				if(rs.getString("id").equals(k_id_arr.get(i))) {
 					k_usage_arr.add(Integer.parseInt(rs.getString("usage")) - 1);
-//					System.out.println(k_usage_arr.get(i)+"");
 					i++;
 				} else {
-//					System.out.println("not equal k_id");
 				}
 			}
 			rs.close();
 			pstmt.close();
 			
 			//k table에서 해당 k_id의 usage를 1씩 감소한 것(k_usage_arr)을 업데이트
-			for(i=0;i<length;i++){
+			for(i=0, length=k_usage_arr.size();i<length;i++){
 				pstmt = conn.prepareStatement("UPDATE keyword_tb SET `usage` = " + k_usage_arr.get(i) + " WHERE id = '" + k_id_arr.get(i) +"'");
 				pstmt.executeUpdate();
 				pstmt.close();
@@ -208,7 +194,7 @@ public class DBConnection {
 			pstmt.executeUpdate();
 			
 			//s table에서 현 세션 제거
-			sql1 = "DELETE FROM session_tb WHERE id = " + s_id;
+			sql1 = "DELETE FROM session_tb WHERE id = '" + s_id + "'";
 			pstmt = conn.prepareStatement(sql1);
 			pstmt.executeUpdate();
 			
@@ -236,7 +222,6 @@ public class DBConnection {
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
 			
-			String id;
 			while(rs.next()) {
 				k_id_arr.add(rs.getString("id"));
 				
@@ -247,13 +232,9 @@ public class DBConnection {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		int length;
-		
 		//sk table에서 k_id가 위에서 찾은 id인 s_id가져옴
 		try {
-			length = k_id_arr.size();
-			for(int i=0;i<length;++i) {
+			for(int i=0, length = k_id_arr.size();i<length;++i) {
 				sql = "SELECT s_id FROM session_keyword_tb WHERE k_id = " + k_id_arr.get(i);
 				pstmt = conn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
@@ -264,11 +245,9 @@ public class DBConnection {
 		} catch (SQLException e){
 			e.printStackTrace();
 		}
-
 		//s table애서 id=s_id인 것의 session 가져옴
 		try {
-			length = s_id_arr.size();
-			for(int i=0;i<length;++i) {
+			for(int i=0, length = s_id_arr.size();i<length;++i) {
 				sql = "SELECT session FROM session_tb WHERE id = " + s_id_arr.get(i);
 				pstmt = conn.prepareStatement(sql);
 				rs = pstmt.executeQuery();
@@ -284,5 +263,26 @@ public class DBConnection {
 		sessions = sessions_arr.toArray(sessions);
 		
 		return sessions;
+	}
+	
+	public ArrayList<String> selectAllSessions() {
+		ArrayList<String> sessions_arr = new ArrayList<>();
+		String sql;
+		try {
+			sql = "SELECT session FROM session_tb";
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				sessions_arr.add(rs.getString("session"));
+			}
+			rs.close();
+			pstmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return sessions_arr;
 	}
 }
