@@ -10,7 +10,8 @@ import java.util.ArrayList;
 public class DBConnection {
 	
 	final String driver = "com.mysql.jdbc.Driver";
-	final String url = "jdbc:mysql://114.70.235.68:3306/tagcloud";
+//	final String url = "jdbc:mysql://114.70.235.68:3306/tagcloud";
+	final String url = "jdbc:mysql://114.70.235.40:3306/tagcloud";
 	final String uId = "wordcloud";
 	final String uPwd = "160826";
 	
@@ -34,6 +35,15 @@ public class DBConnection {
 			System.out.println("접속실패");
 		}
 		
+	}
+	
+	public void close() {
+		try {
+			conn.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/*
@@ -113,12 +123,6 @@ public class DBConnection {
 			}
 			
 		} catch (SQLException e){
-			e.printStackTrace();
-		}
-		try {
-			conn.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -224,7 +228,6 @@ public class DBConnection {
 			
 			while(rs.next()) {
 				k_id_arr.add(rs.getString("id"));
-				
 			}
 			rs.close();
 			pstmt.close();

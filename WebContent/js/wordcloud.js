@@ -5,48 +5,7 @@ function drawWordcloud() {
 	
 	var fill = d3.scale.category20b();
  	
-	var data = [ {word: "Hello", weight: 22},
-	             {word: "Begin Again", weight: 60},
-	             {word: "Sing Street", weight: 35},
-	             {word: "Notebook", weight: 18},
-	             {word: "AboutTime", weight: 10},
-	             {word: "Jason Bourn", weight: 42},
-	             {word: "Mission Impossible", weight: 24},
-	             {word: "GodFather", weight: 25},
-	             {word: "Up", weight: 14},
-	             {word: "Gattaca", weight: 10},
-	             {word: "Good Will Hunting", weight: 16},
-	             {word: "d3js", weight: 22},
-	             {word: "Lion King", weight: 35},
-	             {word: "GalaxyNote3", weight: 18},
-	             {word: "usbdisk", weight: 10},
-	             {word: "sandisk", weight: 13},
-	             {word: "STARBUCKS", weight: 31},
-	             {word: "Redondo", weight: 16},
-	             {word: "taylors", weight: 14},
-	             {word: "AHMAD", weight: 10},
-	             {word: "Winter Charm", weight: 16},
-	             {word: "fruit herb", weight: 60},
-	             {word: "black tea", weight: 35},
-	             {word: "greenfield", weight: 18},
-	             {word: "Orange Blossom", weight: 10},
-	             {word: "English Breakfast", weight: 36},
-	             {word: "Cylon", weight: 22},
-	             {word: "TWININGS", weight: 43},
-	             {word: "LadyGrey", weight: 14},
-	             {word: "EarlGrey", weight: 10},
-	             {word: "Rooibos", weight: 16},
-	             {word: "Ninas", weight: 22},
-	             {word: "Mixed Berries", weight: 35},
-	             {word: "Once", weight: 18},
-	             {word: "Natural", weight: 10},
-	             {word: "Peppermint", weight: 15},
-	             {word: "GreenTea", weight: 17},
-	             {word: "Vanila", weight: 42},
-	             {word: "Chocolate", weight: 14},
-	             {word: "coffee", weight: 10},
-	             {word: "Blur", weight: 16},
-	             {word: "Oasis", weight: 30} ];
+	var data = [ {word: "TagCloud", weight: 10} ];
 	
 	data = data.slice();
 	
@@ -75,6 +34,7 @@ function drawWordcloud() {
 		//input가정
 //		var input = '{"Hello":3, "AboutTime":2, "Sing Street":5, "Mission Impossible":9, "Notebook":1}';
 		
+		console.log(input);
 		var tmp = JSON.parse(input);
 
 		var keyset = [];
@@ -106,11 +66,6 @@ function drawWordcloud() {
 		
 		update();
 	};
-	
-//	$('#removeBtn').on('click', function() {
-//		data.pop();
-//		update();
-//	});
 	
 	function draw(newdata, bounds) {
 

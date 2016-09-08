@@ -83,10 +83,6 @@ function updateWordcloud(input) {
 		<div id="words">
 		
 		</div>
-<!-- 			<div>
-				<button id="addBtn">Add data!</button>
-				<button id="removeBtn">Remove data!</button>
-			</div> -->
 		<div id="contents">
 		 	<div id="word-cloud"></div>
 		</div>
