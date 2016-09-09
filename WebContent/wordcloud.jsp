@@ -27,7 +27,8 @@ $('document').ready(function () {
 
 function websocket_init() {
 	if('WebSocket' in window) {
-		var host="ws://localhost:8080/d3js/websocket";
+/* 		var host="ws://114.70.235.71:8080/TagCloud/websocket"; */
+		var host="ws://114.70.235.40:8080/TagCloud/websocket";
 		var socket = new WebSocket(host);
 		
 		socket.oneror = function(event) {

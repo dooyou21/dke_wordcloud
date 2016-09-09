@@ -28,6 +28,7 @@ private static Set<Session> clients = Collections.synchronizedSet(new HashSet<Se
 	 */
 	
 	private String TridentSessionId;
+	private Boolean IsTridentConnected = false;
 	
 	@OnMessage
 	public void onMessage(String message, Session session) throws IOException {
@@ -38,18 +39,11 @@ private static Set<Session> clients = Collections.synchronizedSet(new HashSet<Se
 			
 			dbcon.insertKeywordsAndSessions(m[1], session.getId()); //connection close
 
-//			synchronized(clients) {
-//				for(Session client: clients) {
-//					if(client.equals(session)) {
-//						client.getBasicRemote().sendText(message);
-//					}
-//				}
-//			}
 			
 		} else { //trident에서 온 메시지이면 skmap테이블에서 해당하는 키워드를 요청한 세션에게 보낼 json스트링에 추가함
-			//m[1] = T::{"weight":1,"keyword":"hello","word":"KFCBurrito"};
 //			System.out.println("trident's message: "+m[1]);
 			TridentSessionId = session.getId();
+			IsTridentConnected = true;
 			
 			ArrayList<String> allSessions = dbcon.selectAllSessions();
 			
@@ -61,12 +55,8 @@ private static Set<Session> clients = Collections.synchronizedSet(new HashSet<Se
 				
 				String[] selectedSessions = null;
 				
-	//			String kw = "{\"data\":[[\"KFCBurrito\", 3, \"storm\"],[\"McDonald\", 3, \"hello\"],[\"Cola\", 3, \"keyword3\"]]}";
-	//			String kw = "{\"data\":[{\"word\":\"KFCBurrito\", \"weight\":8, \"keyword\":\"storm\"},{\"word\":\"McDonald\", \"weight\":30, \"keyword\":\"hello\"},{\"word\":\"Cola\", \"weight\":20, \"keyword\":\"esper\"}]}";
-				//T: {"data":[["ports",1,"storm"],["ALwx",1,"storm"],["Sunset",1,"storm"],["Bigbang",1,"빅뱅"],["BW4HANA",1,"data"],["digitaltransformation",1,"data"],["juicy",1,"data"],["ProyectoPF428",7,"data"],["CX",1,"data"],["Visioneering",1,"storm"],["Undisputed",1,"hello"],["엑소",1,"엑소"]]}
 				JSONParser parser = new JSONParser();
 				try {
-	//				Object obj = parser.parse(kw);
 					Object obj = parser.parse(m[1]);
 					JSONObject jobj = (JSONObject) obj;
 //					System.out.println(jobj);
@@ -126,8 +116,16 @@ private static Set<Session> clients = Collections.synchronizedSet(new HashSet<Se
 	
 	@OnClose
 	public void onClose(Session session) {
-//		clients.remove("close: "+session.getId());
-		if(session.getId().equals(TridentSessionId)){
+		clients.remove("close: "+session.getId());
+		if(IsTridentConnected){
+			if(!session.getId().equals(TridentSessionId)){
+				IsTridentConnected = false;
+			} else {
+				dbcon = new DBConnection();
+				dbcon.deleteSession(session.getId());
+				dbcon.close();
+			}
+		} else {
 			dbcon = new DBConnection();
 			dbcon.deleteSession(session.getId());
 			dbcon.close();

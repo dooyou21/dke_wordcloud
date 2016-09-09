@@ -10,10 +10,12 @@ import java.util.ArrayList;
 public class DBConnection {
 	
 	final String driver = "com.mysql.jdbc.Driver";
-//	final String url = "jdbc:mysql://114.70.235.68:3306/tagcloud";
+//	final String url = "jdbc:mysql://114.70.235.71:3306/tagcloud";
+//	final String uId = "root";
+//	final String uPwd = "160905";
 	final String url = "jdbc:mysql://114.70.235.40:3306/tagcloud";
-	final String uId = "wordcloud";
-	final String uPwd = "160826";
+	final String uId = "tagcloud";
+	final String uPwd = "dke304";
 	
 	Connection conn;
 	PreparedStatement pstmt;
